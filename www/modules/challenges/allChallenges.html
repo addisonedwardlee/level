@@ -1,0 +1,21 @@
+<ion-view title="Level {{_self.points}}">
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-buttons side="right">
+      <button class="button button-energized" ng-click="openModal()">Create</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="has-footer">
+    <ion-refresher pulling-text="Pull to get new challenges" on-refresh="getChallenges()">
+    </ion-refresher>
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="text" placeholder="Search" ng-model="search.name">
+    </label>
+    <div class="list">
+      <ion-item ng-repeat="challenge in challenges | filter:search:strict" href="#/app/challenges/{{challenge.challengeId}}">
+        <div>{{challenge.name}}</div>
+        <div class="ion-item-summary">{{challenge.description}}</div>
+      </ion-item>
+    </div>
+  </ion-content>
+</ion-view>

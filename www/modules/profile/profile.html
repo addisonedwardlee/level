@@ -1,0 +1,52 @@
+<ion-view title="Level {{_self.points}}">
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon ion-chevron-left"> Back</ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content class="has-footer">
+    <div class="list card">
+      <div class="item item-thumbnail-left">
+        <img src="{{user.userImg}}">
+        <h2>{{user.screenName}}</h2>
+        <p>{{user.location}}</p>
+      </div>
+      <div class="item item-body profile-body">
+        <div class="row">
+          <div class="col col-33">
+            <h2>Points</h2>
+            <p class="col-offset-10">{{user.points}}</p>
+          </div>
+          <div class="col col-33">
+            <h2>Followers</h2>
+            <p class="col-offset-33">{{user.followers}}</p>
+          </div>
+          <div class="col col-33">
+            <h2>Following</h2>
+            <p class="col-offset-33">{{user.following}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item" ng-click="goToLeaderboard()">
+        Leaderboard Rank: <b>1</b> <span class="activity-challenge right">see all</span>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item" ng-click="goToCharts()">
+        Workout Charts <span class="activity-challenge right">see all</span>
+      </div>
+    </div>
+    <div class="list card">
+      <div class="item">
+        Recently Completed Challanges
+      </div>
+      <div class="item" ng-repeat="challenge in userchallenges" ng-init="challenge.postTime = convertTime(challenge.postTime)">
+        <p class="activity-text">
+        Completed the challenge 
+        <a href="#/app/challenges/{{challenge.challengeId}}" class="activity-challenge">{{challenge.name}}</a>
+        for <b>{{challenge.totalPoints}}</b> points {{challenge.postTime}}
+        </p>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

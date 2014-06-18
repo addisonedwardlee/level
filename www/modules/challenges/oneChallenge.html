@@ -1,0 +1,31 @@
+<ion-view title="Level {{_self.points}} points">
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon ion-chevron-left"> Back</ion-nav-back-button>
+    <ion-nav-buttons side="right">
+      <button class="button button-assertive" ng-click="deleteChallenge()" ng-show="challengeOwner">Delete</button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content class="has-footer">
+    <div class="padding">
+      <h2>{{challenge.name}}</h2>
+      <p>{{challenge.description}}</p>
+      <p>Challenge created by:</p>
+      <div>
+        <img src="{{challenge.userImg}}" class="challenge-image"> <b>{{challenge.screenName}}</b>
+      </div>
+      <div ng-show="!started">
+        <p>This challenge is worth: <b>{{challenge.totalPoints}} points</b></p>
+        <button class="button button-assertive" ng-click="startChallenge()">
+          Take the challenge!
+        </button>
+      </div>
+      <div ng-show="started">
+        <progress class="challenge-progress" value="{{userPoints}}" max="{{challenge.totalPoints}}"></progress>
+        <p>Progress: <b>{{userPoints}} points</b> out of <b>{{challenge.totalPoints}} total points</b></p>
+      </div>
+    </div>
+    <div class="list">
+      <exercise ng-repeat="exercise in challenge.tasks" exercise="exercise"></exercise>
+    </div> 
+  </ion-content>
+</ion-view>

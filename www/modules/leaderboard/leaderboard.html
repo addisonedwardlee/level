@@ -1,0 +1,14 @@
+<ion-view title="Level {{_self.points}} points">
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon ion-chevron-left"> Back</ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content class="has-footer">
+    <ion-list>
+      <ion-item class="item item-avatar" ng-repeat="user in leaderboard" href="#/app/profile/{{user.id}}">
+        <img src="{{user.userImg}}">
+        {{$index + 1}}. {{user.userName}}
+        <span class="badge badge-energized"> {{user.points}} points</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

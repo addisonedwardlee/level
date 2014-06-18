@@ -1,0 +1,122 @@
+/* -------Global helpers-------- */
+.has-footer {
+  bottom: 50px;
+}
+
+.left {
+  float:left;
+}
+
+.right {
+  float:right;
+}
+
+.buttons-right {
+  margin: -10px 5px -20px 5px;
+  float:right;
+}
+
+.popup-open .backdrop {
+z-index: 11;
+}
+
+/* -------Login-------- */
+.logo {
+  width: 100%;
+}
+
+/* -------Tabs-------- */
+.tab-item {
+  opacity: 0.5;
+}
+
+.active {
+  opacity: 1;
+}
+
+/* -------Challenges-------- */
+.ion-item-summary {
+  width: 100%;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.challenge-image{
+  max-height: 50px;
+  max-width: 50px;
+}
+
+.challenge-progress {
+  -webkit-appearance: none;
+}
+
+.challenge-progress::-webkit-progress-value {
+  background-image:
+   -webkit-linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0,0, 0, .1) 66%, transparent 66%),
+   -webkit-linear-gradient(left, #EF4E3A, #66CC33);
+  border-radius: 2px; 
+  background-size: 35px 20px, 100% 100%, 100% 100%;
+  -webkit-animation: animate-stripes 5s linear infinite;
+}
+
+/* used to animate the progress bar */
+@-webkit-keyframes animate-stripes {
+   100% { background-position: -100px 0px; }
+}
+
+.challenge-complete{
+  min-height: 40px;
+  background-color: #f5f5f5;
+  color: #222;
+  font-weight: bold;
+}
+
+.challenge-buttons {
+  top: 30px!important;
+}
+
+.challenge-badge {
+  top: 5px!important;
+  right: 20px!important;
+}
+
+/* -------Activties-------- */
+.card-avatar {
+  margin: 2px -7px 0 -7px;
+}
+
+.activity-user {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.activity-post-time {
+  color: #666;
+  font-size: 12px;
+}
+
+.activity-picture {
+  max-height: 160px;
+  max-width: 250px;
+  margin-left: -40px;
+}
+
+.activity-text {
+  white-space: normal!important;
+}
+
+.activity-challenge {
+  text-decoration: none;
+  color: orange;
+}
+
+/* -------Profile-------- */
+.profile-body {
+  padding-top: 0;
+}
+
+.stat-chart {
+  display: inline-block;
+  text-align: center;
+}

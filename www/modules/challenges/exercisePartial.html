@@ -1,0 +1,26 @@
+<div>
+  <div ng-class="{'challenge-complete':exercise.complete, 'item item-button-right':true}">
+    <div class="row">
+      <div class="exercise-name">{{exercise.name}}</div>
+    </div>
+    <div class="ion-item-summary">
+      <div>Sets: {{exercise.sets}}</div>
+      <div>Reps: {{exercise.reps}}</div>
+    </div>
+    <span class="badge badge-assertive challenge-badge">{{exercise.points}} points</span>
+    <div class="buttons challenge-buttons">
+      <button class="button button-energized ion-clipboard" ng-click="edit()">
+         <i type="checkbox"></i>
+      </button>
+      <button class="button button-balanced ion-checkmark" ng-click="complete()">
+         <i type="checkbox"></i>
+      </button>
+    </div>
+  </div>
+  <div class="item item-divider item-button-right" ng-show="dropdown">
+    <div class="item item-input-inset">
+      <input type="text" placeholder="Enter details here">
+    </div>
+    <button class="button button-positive ion-camera" ng-click="takePicture()"></button>
+  </div>
+</div>

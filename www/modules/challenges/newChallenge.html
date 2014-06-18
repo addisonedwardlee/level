@@ -1,0 +1,58 @@
+<div class="modal" title="New Challenge">
+  <ion-header-bar>
+    <h1 class="title">Create a new challenge!</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="card">
+      <div class="item item-divider">
+        Challenge Summary
+      </div>
+      <form name="form.validation">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Challenge Name</span>
+          <input type="text" name="name" placeholder="Core Explosion" ng-model="modalData.name" required>
+        </label>
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Description</span>
+          <input type="text" name="description" placeholder="Blast your #core and #legs!" ng-model="modalData.description" required>
+        </label>
+        <div class="item item-divider">
+          Challenge Tasks
+        </div>
+        <label class="item item-input item-stacked-label" ng-repeat="task in modalData.tasks">
+          <div class="row">
+            <div>
+              <span class="input-label">Task</span>
+              <input type="text" name="taskName" placeholder="#V-ups" ng-model="task.name" required>
+            </div>
+            <div>
+              <span class="input-label">Points</span>
+              <input type="number" name="points" placeholder="50" ng-model="task.points" required>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <span class="input-label">Sets</span>
+              <input type="number" name="sets" placeholder="4" ng-model="task.sets" required>
+            </div>
+            <div>
+              <span class="input-label">Reps</span>
+              <input type="number" name="reps" placeholder="20" ng-model="task.reps" required>
+            </div>
+          </div>
+        </label>
+      </form>
+    </div>
+    <div>
+      <button class="button button-block button-balanced" ng-click="addTask()">
+        Add another exercise
+      </button>
+      <button class="button button-block button-positive" ng-click="submitModal()">
+        Create Challenge
+      </button>
+      <button class="button button-block button-assertive" ng-click="cancelModal()">
+        Cancel
+      </button>
+    </div>
+  </ion-content>
+</div>

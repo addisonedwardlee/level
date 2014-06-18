@@ -1,0 +1,9 @@
+.DS_Store
+platforms/
+platforms/ios/
+platforms/android/
+plugins/
+bower_components/
+node_modules/
+www/lib/
+._*

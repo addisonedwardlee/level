@@ -1,0 +1,13 @@
+<ion-view>
+  <ion-nav-bar class="nav-title-slide-ios7"></ion-nav-bar>
+  <ion-content class="has-footer">
+    <div class="list">
+      <ion-toggle ng-repeat="item in settings" ng-model="item.checked" ng-checked="item.checked">
+        {{ item.text }}
+      </ion-toggle>
+      <button class="button button-block button-assertive" ng-click="logout()">
+        Logout
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
