@@ -6,7 +6,7 @@ angular.module('level.services.fblogin', [])
   var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth';
 
   // By default we store fbtoken in sessionStorage
-  var tokenStore = window.sessionStorage;
+  var tokenStore = window.localStorage;
   var fbAppId;
   var deferredLogin;
   var oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';

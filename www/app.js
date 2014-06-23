@@ -13,7 +13,8 @@ angular.module('level', [
   'level.services.levelusers',
   'level.services.leaderboard',
   'level.services.fblogin',
-  'level.services.twitterlogin'
+  'level.services.twitterlogin',
+  'level.services.timeconversion'
   ])
 
 .constant('API_ENDPOINT', 'http://api.level.my/json')
@@ -79,6 +80,15 @@ angular.module('level', [
         }
       }
     })
+    .state('app.activityComments', {
+      url: "/activity/:activityData",
+      views: {
+        'menuContent' :{
+          templateUrl: "modules/activity/oneActivity.html",
+          controller: 'CommentCtrl'
+        }
+      }
+    })
     .state('app.challenges', {
       url: "/challenges",
       views: {
@@ -89,7 +99,7 @@ angular.module('level', [
       }
     })
     .state('app.oneChallenge', {
-      url: "/challenges/:challengeId",
+      url: "/challenges/:challengeId/:challengeTemplate",
       views: {
         'menuContent' :{
           templateUrl: "modules/challenges/oneChallenge.html",

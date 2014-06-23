@@ -1,8 +1,10 @@
 angular.module('level.controllers.activities', [])
 
-.controller('ActivityCtrl', ['$scope','$rootScope', '$ionicModal', '$ionicPopup', 'ActivityService', 
-  function($scope, $rootScope, $ionicModal, $ionicPopup, ActivityService) {
+.controller('ActivityCtrl', ['$scope', '$ionicModal', '$ionicPopup', 'ActivityService', 'LevelUserService',
+  function($scope, $ionicModal, $ionicPopup, ActivityService, LevelUserService) {
   
+  $scope.self = LevelUserService.self;
+
   $scope.index = {indexStart: 0,indexLimit: 20};
 
   $scope.getActivities = function(){
@@ -14,8 +16,6 @@ angular.module('level.controllers.activities', [])
     });
   };
   $scope.getActivities();
-
-  $scope.self = $rootScope._self;
 
   //Create new post Modal
   $scope.modalData = {};
@@ -43,8 +43,6 @@ angular.module('level.controllers.activities', [])
 
   $scope.submitModal = function(){
     if($scope.formValidation()){
-      $scope.modalData.numLikes = 0;
-      $scope.modalData.numComments = 0;
       $scope.modalData.likes = [];
       $scope.modalData.comments = [];
       $scope.modalData.picture = null;
@@ -73,8 +71,88 @@ angular.module('level.controllers.activities', [])
 
 }])
 
-.directive('activity', ['$rootScope', '$ionicPopup', 'ActivityService', 
-  function($rootScope, $ionicPopup, ActivityService){
+.controller('CommentCtrl', ['$scope', '$state', 'ActivityService', 'LevelUserService', 'TimeConversionService',
+  function($scope, $state, ActivityService, LevelUserService, TimeConversionService) {
+  
+  $scope.self = LevelUserService.self;
+  $scope.activity = ActivityService.currentService;
+
+  $scope.goToChallenge = function(challengeId){
+    $state.go('app.oneChallenge', {challengeId: challengeId, challengeTemplate: true});
+  };
+
+  $scope.goToProfile = function(profileId){
+    $state.go('app.profile', {profileId: profileId});
+  };
+
+  $scope.convertTime = function(time){
+    var convertedTime = new Date(time).getTime();
+    return TimeConversionService(convertedTime);
+  };
+
+
+  $scope.submitComment = function(){
+    if($scope.userComment){
+      var commentData = {
+        activityId: $scope.activity.activityId,
+        text: $scope.userComment
+      };
+      ActivityService.comment(commentData, function(){});
+
+      //add more data to make comment look right locally
+      commentData.userImg = $scope.self.userImg;
+      commentData.screenName = $scope.self.screenName;
+      commentData.postTime = new Date();
+      $scope.activity.comments.unshift(commentData);
+      //reset user comment field
+      $scope.userComment = '';
+    }
+  };
+
+  $scope.deleteComment = function(index){
+    var id = this.comment.commentId;
+    if(this.comment.userId === $scope.self.userId){
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Delete comment',
+        template: 'Are you sure that you want to delete this comment?',
+        subTitle: 'This action cannot be undone'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          $scope.activity.comments.splice(index, 1);
+          ActivityService.deleteComment({
+            activityId: $scope.activity.activityId,
+            commentId: id
+          }, function(){});
+        }
+      });
+    }
+  };
+
+  $scope.liked = false;
+  $scope.checkLikes = function(){
+    if($scope.activity.likes){
+      for(var i = 0; i < $scope.activity.likes.length; i++){
+        if($scope.activity.likes[i].userId === $scope.self.userId){
+          $scope.liked = true;
+        }
+      }
+    }
+  };
+  $scope.checkLikes();
+
+  $scope.like = function(){
+    if(!$scope.liked){        
+      ActivityService.like({activityId: $scope.activity.activityId}, function(){});
+      $scope.liked = true;
+      $scope.activity.likes.push({});
+    }
+  };
+
+}])
+
+.directive('activity', ['$ionicPopup', '$state', 'ActivityService', 'LevelUserService', 'TimeConversionService',
+  function($ionicPopup, $state, ActivityService, LevelUserService, TimeConversionService){
   return {
     restrict: 'E',
     replace: true,
@@ -82,15 +160,23 @@ angular.module('level.controllers.activities', [])
       activity: '='
     },
     templateUrl: 'modules/activity/activityPartial.html',
-    link: function(scope, iElement, iAttrs){    
-      scope.self = $rootScope._self;
-        
-      scope.convertTime = function(time){
-        return moment(new Date(time)).fromNow();
-      };
-      scope.activity.postTime = scope.convertTime(scope.activity.postTime);
+    link: function(scope, element, attrs){    
+      scope.self = LevelUserService.self;
 
-      scope.deletePost = function(){
+      scope.goToChallenge = function(challengeId){
+        $state.go('app.oneChallenge', {challengeId: challengeId, challengeTemplate: true});
+      };
+
+      scope.goToProfile = function(profileId){
+        $state.go('app.profile', {profileId: profileId});
+      };
+
+      scope.convertTime = function(time){
+        var convertedTime = new Date(time).getTime();
+        return TimeConversionService(convertedTime);
+      };
+
+      scope.deletePost = function(index){
         if(scope.activity.userId === scope.self.userId){
           var confirmPopup = $ionicPopup.confirm({
             title: 'Delete post',
@@ -99,51 +185,23 @@ angular.module('level.controllers.activities', [])
           });
           confirmPopup.then(function(res) {
             if(res) {
+              element.remove();
               ActivityService.deletePost({activityId: scope.activity.activityId}, function(){});
             }
           });
         }
       };
-
-      scope.showComments = false;
-      scope.newComment = false;
-
+ 
       scope.addComment = function(){
-        scope.showComments = !scope.showComments;
-      };
-
-      scope.submitComment = function(){
-        scope.newComment = true;
-        scope.numComments++;
-
-        var commentData = {
-          activityId: scope.activity.activityId,
-          text: scope.userComment
-        };
-        ActivityService.comment(commentData, function(){});
-      };
-
-      //this is not yet working
-      scope.deleteComment = function(){
-        if(scope.activity.userId === scope.self.userId){
-          var confirmPopup = $ionicPopup.confirm({
-            title: 'Delete comment',
-            template: 'Are you sure that you want to delete this comment?',
-            subTitle: 'This action cannot be undone'
-          });
-          confirmPopup.then(function(res) {
-            if(res) {
-              ActivityService.deleteComment({commentId: scope.activity.activityId}, function(){});
-            }
-          });
-        }
+        ActivityService.currentService = scope.activity;
+        $state.go('app.activityComments');
       };
 
       scope.liked = false;
       scope.checkLikes = function(){
         if(scope.activity.likes){
           for(var i = 0; i < scope.activity.likes.length; i++){
-            if(scope.activity.likes[i].userId === $rootScope._self._id){
+            if(scope.activity.likes[i].userId === scope.self.userId){
               scope.liked = true;
             }
           }
@@ -155,7 +213,7 @@ angular.module('level.controllers.activities', [])
         if(!scope.liked){        
           ActivityService.like({activityId: scope.activity.activityId}, function(){});
           scope.liked = true;
-          ++scope.activity.numLikes;
+          scope.activity.likes.push({});
         }
       };
     }

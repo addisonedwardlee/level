@@ -1,7 +1,7 @@
-<ion-view title="Level {{_self.points}}">
+<ion-view title="Challenges">
   <ion-nav-bar class="nav-title-slide-ios7">
     <ion-nav-buttons side="right">
-      <button class="button button-energized" ng-click="openModal()">Create</button>
+      <button class="button button-icon icon ion-plus-round" ng-click="openModal()"></button>
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content class="has-footer">
@@ -12,7 +12,7 @@
       <input type="text" placeholder="Search" ng-model="search.name">
     </label>
     <div class="list">
-      <ion-item ng-repeat="challenge in challenges | filter:search:strict" href="#/app/challenges/{{challenge.challengeId}}">
+      <ion-item ng-repeat="challenge in challenges | filter:search:strict" ng-click="goToChallenge(challenge.challengeId)">
         <div>{{challenge.name}}</div>
         <div class="ion-item-summary">{{challenge.description}}</div>
       </ion-item>

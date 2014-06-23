@@ -17,7 +17,15 @@
 }
 
 .popup-open .backdrop {
-z-index: 11;
+  z-index: 11;
+}
+
+.item-narrow {
+  padding: 0 10px;
+}
+
+.item-no-border {
+  border:none;
 }
 
 /* -------Login-------- */
@@ -25,13 +33,27 @@ z-index: 11;
   width: 100%;
 }
 
+/* -------Header-------- */
+.bar-header {
+  background-color: #f0b840;
+}
+
+.bar .title {
+  color: white;
+}
+
+.bar .button.button-icon {
+  color: white;
+}
+
 /* -------Tabs-------- */
 .tab-item {
   opacity: 0.5;
 }
 
-.active {
+.tab-item-active {
   opacity: 1;
+  color: #f0b840;
 }
 
 /* -------Challenges-------- */
@@ -86,12 +108,26 @@ z-index: 11;
 }
 
 .activity-user {
+  display: inline-block;
   text-decoration: none;
   color: black;
   font-weight: 500;
+  max-width: 55%;
+  text-overflow: ellipsis;
+  overflow: auto;
+}
+
+.activity-screen-name {
+  display: inline-block;
+  text-overflow: ellipsis;
+  color: #666;
+  max-width: 50%;
+  font-size: 12px;
+  overflow: auto;
 }
 
 .activity-post-time {
+  display: inline-block;
   color: #666;
   font-size: 12px;
 }
@@ -99,16 +135,55 @@ z-index: 11;
 .activity-picture {
   max-height: 160px;
   max-width: 250px;
-  margin-left: -40px;
+  border-radius: 5px;
+}
+
+.activity-picture-detailed {
+  padding-bottom: 15px;
+  max-height: 200px;
+  max-width: 250px;
+  border-radius: 5px;
+  display: block;
+  margin: auto;
 }
 
 .activity-text {
   white-space: normal!important;
 }
 
+.activity-text-detailed {
+  padding-bottom: 15px;
+  font-size: 22px;
+  color: #666;
+}
+
+.activity-text-container {
+  padding: 0 10px;
+  min-height: 35px;
+}
+
 .activity-challenge {
   text-decoration: none;
   color: orange;
+}
+
+.comment-bar-footer {
+  margin-bottom: 50px;
+  background-color: #f8f8f8;
+}
+
+.has-comment-footer {
+  bottom: 95px;
+}
+
+.delete-comment-button {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  color: #f0b840;
+  margin-top: -40px;
+  margin-right: -20px;
+  float: right;
 }
 
 /* -------Profile-------- */

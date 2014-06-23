@@ -1,51 +1,29 @@
 <div>
   <div class="item item-avatar">
-    <img src="{{activity.userImg}}">
+    <img src="{{activity.userImg}}" ng-click="goToProfile(activity.userId)">
     <div>
-      <a class="activity-user" href="#/app/profile/{{activity.userId}}">{{activity.screenName}}</a>
-      <span class="activity-post-time">{{activity.postTime}}</span>
+      <div ng-click="goToProfile(activity.userId)">
+        <div class="activity-user">First Last</div>
+        <div class="activity-screen-name">{{activity.screenName}}</div>
+        <div class="right activity-post-time">{{convertTime(activity.postTime)}}</div>
+      </div>
+      <p class="activity-text" ng-show="{{!!activity.challengeId}}">
+        Started the challenge <span class="activity-challenge" ng-click="goToChallenge(activity.challengeId)">{{activity.challengeName}}</span>
+      </p>
+      <p class="activity-text" ng-show="{{!activity.challengeId}}">{{activity.text}}</p>
+      <img class="right activity-picture" src="{{activity.picture}}" ng-show="{{!!activity.picture}}">
     </div>
-    <p class="activity-text" ng-show="{{!!activity.challengeId}}">
-      Started the challenge <a href="#/app/challenges/{{activity.challengeId}}" class="activity-challenge">{{activity.challengeName}}</a>
-    </p>
-    <p class="activity-text" ng-show="{{!activity.challengeId}}">{{activity.text}}</p>
-    <img class="activity-picture" src="{{activity.picture}}" ng-show="{{!!activity.picture}}">
     <div>
       <div class="buttons-right">
         <button class="button button-clear activity-button icon ion-ios7-chatbubble" ng-click="addComment()">
-          <span ng-show="activity.numComments">({{activity.numComments}})</span>
+          <span ng-show="activity.comments.length">({{activity.comments.length}})</span>
         </button>
         <button ng-class="{'button button-clear activity-button icon ion-thumbsup':true, 'button-stable': !liked, 'button-positive': liked}" ng-click="like()">
-          <span ng-show="activity.numLikes">({{activity.numLikes}})</span>
+          <span ng-show="activity.likes.length">({{activity.likes.length}})</span>
         </button>
-        <button class="button button-clear activity-button icon ion-close-circled" ng-click="deletePost()" ng-show="activity.userId === self.userId">
+        <button class="button button-clear activity-button icon ion-close-round" ng-click="deletePost()" ng-show="activity.userId === self.userId">
         </button>
       </div>
-    </div>
-  </div>
-  <div class="item item-divider" ng-show="showComments">
-    <div class="list card card-avatar">
-        <div class="item item-avatar" ng-show="!newComment">
-          <img src="{{self.userImg}}">
-          <form ng-submit="submitComment()">
-            <div>
-              <input type="text" placeholder="Add a comment" ng-model="userComment">
-            </div>
-          </form>
-        </div>
-        <div class="item item-avatar" ng-show="newComment">
-          <img src="{{self.userImg}}">
-          <a class="activity-user">{{self.screenName}}</a>
-          <p>{{userComment}}</p>
-        </div>
-        <div class="item item-avatar" ng-repeat="comment in activity.comments" ng-init="comment.postTime = convertTime(comment.postTime)">
-          <img src="{{comment.userImg}}">
-          <div>
-            <a class="activity-user" href="#/app/profile/{{comment.userId}}">{{comment.screenName}}</a>
-            <span class="activity-post-time">{{comment.postTime}}</span>
-          </div>
-          <p>{{comment.text}}</p>
-        </div>
     </div>
   </div>
 </div>

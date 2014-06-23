@@ -1,11 +1,13 @@
 angular.module('level.services.levelusers', [])
 
-.service('LevelUserService', ['$http', '$rootScope', 'API_ENDPOINT', 
-  function($http, $rootScope, API_ENDPOINT){
+.service('LevelUserService', ['$http', 'API_ENDPOINT', 
+  function($http, API_ENDPOINT){
+
+  this.self = {};
 
   //@params -> {userId: STRING, session: STRING}
   this.verifySession = function(params, callback) {
-    $http.get(API_ENDPOINT + '/user/verifysession/' + $rootScope._self.userId + '/' + $rootScope._self.session)
+    $http.get(API_ENDPOINT + '/user/verifysession/' + this.self.userId + '/' + this.self.session)
       .success(function(data, status){
         callback(data);
       })
@@ -68,7 +70,7 @@ angular.module('level.services.levelusers', [])
   };
 
   this.update = function(params, callback){
-    $http.post(API_ENDPOINT + '/user/update', params)
+    $http.post(API_ENDPOINT + '/user/update/' + this.self.userId + '/' + this.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -78,7 +80,7 @@ angular.module('level.services.levelusers', [])
   };
 
   this.delete = function(params, callback){
-    $http.post(API_ENDPOINT + '/user/delete', params)
+    $http.post(API_ENDPOINT + '/user/delete/' + this.self.userId + '/' + this.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -89,7 +91,7 @@ angular.module('level.services.levelusers', [])
 
   //@id -> userId or _id
   this.getCharts = function(callback){
-    $http.get('http://stats.level.my/json/series/' + $rootScope._self.screenName)
+    $http.get('http://stats.level.my/json/series/' + this.self.screenName)
       .success(function(data, status){
         callback(data);
       })

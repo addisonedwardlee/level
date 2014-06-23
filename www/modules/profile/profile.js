@@ -1,15 +1,15 @@
 angular.module('level.controllers.profile', [])
 
-.controller('ProfileCtrl', ['$scope', '$rootScope', '$stateParams', '$state', 'LevelUserService', 'ChallengeService',
-  function($scope, $rootScope, $stateParams, $state, LevelUserService, ChallengeService) {
+.controller('ProfileCtrl', ['$scope', '$stateParams', '$state', 'LevelUserService', 'ChallengeService', 'TimeConversionService',
+  function($scope, $stateParams, $state, LevelUserService, ChallengeService, TimeConversionService) {
 
-  var id = $stateParams.profileId;
+  var userId = $stateParams.profileId;
   var challengeIndex = {
     indexStart: 0,
     indexLimit: 20,
-    userId: id
+    userId: userId
   };
-  LevelUserService.getOne(id, function(data){
+  LevelUserService.getOne(userId, function(data){
     $scope.user = data;
     ChallengeService.getUserChallenges(challengeIndex, function(data){
       console.log(data)
@@ -18,7 +18,8 @@ angular.module('level.controllers.profile', [])
   });
 
   $scope.convertTime = function(time){
-    return moment(new Date(time)).fromNow();
+    var convertedTime = new Date(time).getTime();
+    return TimeConversionService(convertedTime);
   };
 
   $scope.goToLeaderboard = function(){
@@ -26,7 +27,11 @@ angular.module('level.controllers.profile', [])
   };
 
   $scope.goToCharts = function(){
-    $state.go('app.charts', {profileId: id});
+    $state.go('app.charts', {profileId: userId});
+  };
+
+  $scope.goToMyChallenge = function(id){
+    $state.go('app.oneChallenge', {challengeId: id});
   };
 
 }]);

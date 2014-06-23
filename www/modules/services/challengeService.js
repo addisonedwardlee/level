@@ -1,7 +1,7 @@
 angular.module('level.services.challenge', [])
 
-.service('ChallengeService', ['$http', '$rootScope', 'API_ENDPOINT',
-  function($http, $rootScope, API_ENDPOINT){
+.service('ChallengeService', ['$http', 'LevelUserService', 'API_ENDPOINT',
+  function($http, LevelUserService, API_ENDPOINT){
 
   //@limits -> {indexStart, indexLimit} used for pagination
   this.getMany = function(params, callback){
@@ -27,7 +27,7 @@ angular.module('level.services.challenge', [])
 
  //@params -> {challengeId: STRING, taskId: STRING, sets: NUMBER, reps: NUMBER, amount: NUMBER, text: STRING}
   this.takeChallenge = function(params, callback){
-    $http.post(API_ENDPOINT + '/mychallenge/add/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/mychallenge/add/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -38,7 +38,7 @@ angular.module('level.services.challenge', [])
 
   //@params -> {userId: STRING, session: STRING}
   this.getUserChallenges = function(params, callback){
-    $http.post(API_ENDPOINT + '/mychallenges/get/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/mychallenges/get/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -51,8 +51,8 @@ angular.module('level.services.challenge', [])
   this.completeTask = function(params, callback){
     params.user = {
       type: 't',
-      id: $rootScope._self.authIdTwitter,
-      screen_name: $rootScope._self.screenName.substring(1)
+      id: LevelUserService.self.authIdTwitter,
+      screen_name: LevelUserService.self.screenName.substring(1)
     };
     params.created_at = new Date().toUTCString();
     $http.post('http://stats.level.my/postData', params)
@@ -66,7 +66,7 @@ angular.module('level.services.challenge', [])
 
   //@params -> challenge creation object (refer to challenge.js for specifics)
   this.create = function(params, callback){
-    $http.post(API_ENDPOINT + '/challenge/add/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/challenge/add/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -77,7 +77,7 @@ angular.module('level.services.challenge', [])
 
   //@params -> {userId: STRING, session: STRING, challengeId: STRING, key: newValue}
   this.update = function(params, callback){
-    $http.post(API_ENDPOINT + '/challenge/update/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/challenge/update/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -87,8 +87,8 @@ angular.module('level.services.challenge', [])
   };
 
   //@params -> {challengeId: STRING}
-  this.del = function(params, callback){
-    $http.post(API_ENDPOINT + '/challenge/delete/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+  this.deleteChallenge = function(params, callback){
+    $http.post(API_ENDPOINT + '/challenge/delete/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })

@@ -2,26 +2,26 @@
 
 <div class="tabs tabs-icon-top">
   <!-- Activity Tab -->
-  <a ng-class="{'tab-item':true, active:(activeTab === 'activity')}" href="#/app/activity">
-    <i class="icon ion-earth"></i>
+  <a ng-class="{'tab-item':true, 'tab-item-active':(activeTab === 'activity')}" href="#/app/activity">
+    <i class="icon ion-ios7-home"></i>
     Activity
   </a>
 
   <!-- Challenge Tab -->
-  <a ng-class="{'tab-item':true, active:(activeTab === 'challenges')}" href="#/app/challenges">
-    <i class="icon ion-arrow-graph-up-right"></i>
+  <a ng-class="{'tab-item':true, 'tab-item-active':(activeTab === 'challenges')}" href="#/app/challenges">
+    <i class="icon ion-ios7-star"></i>
     Challenges
   </a>
 
   <!-- Stat Tab -->
-  <a ng-class="{'tab-item':true, active:(activeTab === 'profile')}" href="#/app/profile/{{self.userId}}">
-    <i class="icon ion-android-contact"></i>
-    Stats
+  <a ng-class="{'tab-item':true, 'tab-item-active':(activeTab === 'profile')}" href="#/app/profile/{{self.userId}}">
+    <i class="icon ion-person"></i>
+    Me
   </a>
 
   <!-- More Tab -->
-  <a ng-class="{'tab-item':true, active:(activeTab === 'settings')}" href="#/app/settings">
-    <i class="icon ion-more"></i>
-    More
+  <a ng-class="{'tab-item':true, 'tab-item-active':(activeTab === 'settings')}" href="#/app/settings">
+    <i class="icon ion-ios7-gear"></i>
+    Settings
   </a>
 </div>

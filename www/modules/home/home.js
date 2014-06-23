@@ -1,7 +1,7 @@
 angular.module('level.controllers.home', [])
 
-.controller('HomeCtrl', ['$scope', '$rootScope', '$location', 'LevelUserService',
-  function($scope, $rootScope, $location, LevelUserService) {
+.controller('HomeCtrl', ['$scope', '$location', 'LevelUserService',
+  function($scope, $location, LevelUserService) {
 
   var twitterData = {
     screenName: '@Addison_Lee_',
@@ -11,9 +11,9 @@ angular.module('level.controllers.home', [])
 
   LevelUserService.twitterConnect(twitterData, function(data){
     console.log('temp user login in home.js');
-    $rootScope._self = data;
-    console.log('_self', JSON.stringify($rootScope._self));
-    $scope.self = $rootScope._self;
+    LevelUserService.self = data;
+    console.log('_self', JSON.stringify(LevelUserService.self));
+    $scope.self = LevelUserService.self;
   });
 
   //watch used to update active tab  

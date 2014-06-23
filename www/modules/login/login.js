@@ -1,8 +1,8 @@
 angular.module('level.controllers.login', [])
 
-.controller('LoginCtrl', ['$scope', '$rootScope', '$state', 'LevelUserService', 'FacebookLoginService', 'TwitterLoginService',
- function($scope, $rootScope, $state, LevelUserService, FacebookLoginService, TwitterLoginService) {
-  
+.controller('LoginCtrl', ['$scope', '$state', 'LevelUserService', 'FacebookLoginService', 'TwitterLoginService', '$rootScope',
+ function($scope, $state, LevelUserService, FacebookLoginService, TwitterLoginService, $rootScope) {
+
   //used for testing only
   $scope.skipLogin = function(){
     var twitterData = {
@@ -12,8 +12,8 @@ angular.module('level.controllers.login', [])
       };
 
       LevelUserService.twitterConnect(twitterData, function(data){
-        $rootScope._self = data;
-        console.log('_self', JSON.stringify($rootScope._self));
+        LevelUserService.self = data;
+        console.log('_self', JSON.stringify(LevelUserService.self));
         $state.go('app.activity');
       });
   };
@@ -34,8 +34,8 @@ angular.module('level.controllers.login', [])
 
         // LevelUserService.facebookConnect(facebookData, function(data){
           console.log('data', JSON.stringify(data));
-        //   $rootScope._self = data;
-        //   console.log('_self', JSON.stringify($rootScope._self));
+        //   LevelUserService.self = data;
+        // console.log('_self', JSON.stringify(LevelUserService.self));
         //   $state.go('app.activity');
         // });
       });
@@ -49,14 +49,15 @@ angular.module('level.controllers.login', [])
     TwitterLoginService.init()
     .then(function (data) {
       var twitterData = {
+        name: data.name,
         screenName: '@' + data.screen_name,
         authIdTwitter: '' + data.id,
         userImg: data.profile_image_url
       };
 
       LevelUserService.twitterConnect(twitterData, function(data){
-        $rootScope._self = data;
-        console.log('_self', JSON.stringify($rootScope._self));
+        LevelUserService.self = data;
+        console.log('_self', JSON.stringify(LevelUserService.self));
         $state.go('app.activity');
       });
     })
@@ -71,8 +72,8 @@ angular.module('level.controllers.login', [])
 
 }])
 
-.controller('LevelLoginCtrl', ['$scope', '$rootScope', '$state', '$ionicPopup', 'LevelUserService', 
-  function($scope, $rootScope, $state, $ionicPopup, LevelUserService) {
+.controller('LevelLoginCtrl', ['$scope', '$state', '$ionicPopup', 'LevelUserService', 
+  function($scope, $state, $ionicPopup, LevelUserService) {
   
   //used to capture all user entered data
   $scope.form = {};
@@ -88,7 +89,7 @@ angular.module('level.controllers.login', [])
       }
       LevelUserService.signIn($scope.userData, function(data){
         console.log(data);
-        $rootScope._self = data;
+        LevelUserService.self = data;
         $state.go('app.activity');
       });
     }
@@ -119,8 +120,8 @@ angular.module('level.controllers.login', [])
 
 }])
 
-.controller('NewAccountCtrl', ['$scope', '$rootScope', '$state', '$ionicPopup', 'LevelUserService', 
-  function($scope, $rootScope, $state, $ionicPopup, LevelUserService) {
+.controller('NewAccountCtrl', ['$scope', '$state', '$ionicPopup', 'LevelUserService', 
+  function($scope, $state, $ionicPopup, LevelUserService) {
   
   //used to capture all user entered data
   $scope.form = {};
@@ -128,7 +129,7 @@ angular.module('level.controllers.login', [])
   $scope.createAccount = function(){
     if($scope.formValidation()){  
       LevelUserService.create($scope.userData, function(data){
-        $rootScope._self = data;
+        LevelUserService.self = data;
         $state.go('app.activity');
       });
     }

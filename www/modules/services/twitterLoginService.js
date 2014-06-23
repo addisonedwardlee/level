@@ -49,7 +49,6 @@ angular.module('level.services.twitterlogin', [])
       };
 
       var openAuthoriseWindow = function (_url) {
-          console.log('in oauth')
           loginWindow = $window.open(_url, '_blank', 'location=no');
           loginWindow.addEventListener('loadstart', doLoadstart);
       };
@@ -63,13 +62,9 @@ angular.module('level.services.twitterlogin', [])
       var storedAccessData, rawData = localStorage.getItem(twitterKey);
       // here we are going to check whether the data about user is already with us.
       if (localStorage.getItem(twitterKey) !== null) {
-        console.log('in if')
           return Twitter.verify(deferredLogin);
-
       } else {
           // we have no data for save user
-        console.log('in else')
-
           oauth = OAuth(options);
           oauth.fetchRequestToken(openAuthoriseWindow, failureHandler);
       }

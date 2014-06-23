@@ -7,20 +7,20 @@
       <div>Sets: {{exercise.sets}}</div>
       <div>Reps: {{exercise.reps}}</div>
     </div>
-    <span class="badge badge-assertive challenge-badge">{{exercise.points}} points</span>
+    <span class="badge badge-assertive challenge-badge">{{exercise.points}} points per set</span>
     <div class="buttons challenge-buttons">
-      <button class="button button-energized ion-clipboard" ng-click="edit()">
+      <!-- <button class="button button-energized ion-clipboard" ng-click="edit()">
          <i type="checkbox"></i>
-      </button>
-      <button class="button button-balanced ion-checkmark" ng-click="complete()">
+      </button> -->
+      <button ng-class="{'button-outline': true, 'button button-balanced ion-checkmark':true}" ng-repeat="i in setsTemp track by $index" ng-click="complete()">
          <i type="checkbox"></i>
       </button>
     </div>
   </div>
-  <div class="item item-divider item-button-right" ng-show="dropdown">
+<!--   <div class="item item-divider item-button-right" ng-show="dropdown">
     <div class="item item-input-inset">
       <input type="text" placeholder="Enter details here">
     </div>
     <button class="button button-positive ion-camera" ng-click="takePicture()"></button>
-  </div>
+  </div> -->
 </div>

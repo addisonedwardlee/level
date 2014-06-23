@@ -1,10 +1,14 @@
 angular.module('level.services.activity', [])
 
-.service('ActivityService', ['$http', '$rootScope', 'API_ENDPOINT', 
-  function($http, $rootScope, API_ENDPOINT){
+.service('ActivityService', ['$http', 'LevelUserService', 'API_ENDPOINT', 
+  function($http, LevelUserService, API_ENDPOINT){
+
+  //this is used when navigating from one view to another
+  // to avoid doing unneccesary API calls
+  this.currentService = {};
 
   this.getAll = function(params, callback){
-    $http.post(API_ENDPOINT + '/activities/get/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/activities/get/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -14,7 +18,7 @@ angular.module('level.services.activity', [])
   };
 
   this.create = function(params, callback){
-    $http.post(API_ENDPOINT + '/activity/add/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/activity/add/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -24,7 +28,7 @@ angular.module('level.services.activity', [])
   };
 
   this.update = function(params, callback){
-    $http.post(API_ENDPOINT + '/activity/update/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/activity/update/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -34,7 +38,7 @@ angular.module('level.services.activity', [])
   };
 
   this.deletePost = function(params, callback){
-    $http.post(API_ENDPOINT + '/activities/delete/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/activity/delete/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -44,7 +48,7 @@ angular.module('level.services.activity', [])
   };
 
   this.like = function(params, callback){
-    $http.post(API_ENDPOINT + '/like/add/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/like/add/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -54,7 +58,7 @@ angular.module('level.services.activity', [])
   };
 
   this.comment = function(params, callback){
-    $http.post(API_ENDPOINT + '/comment/add/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/comment/add/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })
@@ -64,7 +68,7 @@ angular.module('level.services.activity', [])
   };
 
   this.deleteComment = function(params, callback){
-    $http.post(API_ENDPOINT + '/comment/delete/' + $rootScope._self.userId + '/' + $rootScope._self.session, params)
+    $http.post(API_ENDPOINT + '/comment/delete/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })

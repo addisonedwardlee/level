@@ -1,0 +1,52 @@
+<ion-view title="Activity Post">
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon ion-chevron-left"></ion-nav-back-button>
+  </ion-nav-bar>
+  <ion-content class="has-comment-footer">
+    <ion-list>
+      <div class="item item-avatar item-no-border">
+        <img src="{{activity.userImg}}" ng-click="goToProfile(activity.userId)">
+        <div>
+          <div ng-click="goToProfile(activity.userId)">
+            <div class="activity-user">First Last</div>
+            <div class="activity-screen-name">{{activity.screenName}}</div>
+            <div class="right activity-post-time">{{convertTime(activity.postTime)}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="activity-text-container">
+        <div class="activity-text-detailed" ng-show="{{!!activity.challengeId}}">
+          Started the challenge <span class="activity-challenge" ng-click="goToChallenge(activity.challengeId)">{{activity.challengeName}}</span>
+        </div>
+        <div class="activity-text-detailed" ng-show="{{!activity.challengeId}}">{{activity.text}}</div>
+        <img class="activity-picture-detailed" src="{{activity.picture}}" ng-show="{{!!activity.picture}}">
+      </div>
+      <div class="item item-narrow">
+        <button class="button button-clear activity-button icon ion-ios7-chatbubble">
+          <span ng-show="activity.comments.length">({{activity.comments.length}})</span>
+        </button>
+        <button ng-class="{'button button-clear activity-button icon ion-thumbsup':true, 'button-stable': !liked, 'button-positive': liked}" ng-click="like()">
+          <span ng-show="activity.likes.length">({{activity.likes.length}})</span>
+        </button>
+        <button class="right button button-clear activity-button icon ion-person-add" ng-click="deletePost()" ng-show="activity.userId === self.userId">
+        </button>
+      </div>
+      <div class="item item-avatar" ng-repeat="comment in activity.comments">
+        <img src="{{comment.userImg}}" ng-click="goToProfile(comment.userId)">
+        <div>
+          <div class="activity-user">First Last</div>
+          <div class="activity-screen-name" ng-click="goToProfile(comment.userId)">{{comment.screenName}}</div>
+          <div class="right activity-post-time">{{convertTime(comment.postTime)}}</div>
+        </div>
+        <p>{{comment.text}}</p>
+      </div>
+    </ion-list>
+  </ion-content>
+  <div class="bar bar-footer comment-bar-footer item-input-inset">
+    <button class="button button-clear icon ion-camera"></button>
+    <label class="item-input-wrapper">
+      <input type="text" placeholder="New Comment" ng-model="userComment">
+    </label>
+    <button class="button button-clear icon ion-play" ng-click="submitComment()"></button>
+  </div>
+</ion-view>

@@ -1,6 +1,6 @@
-<ion-view title="Level {{_self.points}}">
+<ion-view title="Profile">
   <ion-nav-bar class="nav-title-slide-ios7">
-    <ion-nav-back-button class="button-icon ion-chevron-left"> Back</ion-nav-back-button>
+    <ion-nav-back-button class="button-icon ion-chevron-left"></ion-nav-back-button>
   </ion-nav-bar>
   <ion-content class="has-footer">
     <div class="list card">
@@ -42,9 +42,9 @@
       </div>
       <div class="item" ng-repeat="challenge in userchallenges" ng-init="challenge.postTime = convertTime(challenge.postTime)">
         <p class="activity-text">
-        Completed the challenge 
-        <a href="#/app/challenges/{{challenge.challengeId}}" class="activity-challenge">{{challenge.name}}</a>
-        for <b>{{challenge.totalPoints}}</b> points {{challenge.postTime}}
+          Completed the challenge 
+          <a ng-click="goToMyChallenge(challenge.myChallengeId)" class="activity-challenge">{{challenge.name}}</a>
+          for <b>{{challenge.totalPoints}}</b> points {{challenge.postTime}} ago
         </p>
       </div>
     </div>
