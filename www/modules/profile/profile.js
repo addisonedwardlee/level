@@ -12,7 +12,7 @@ angular.module('level.controllers.profile', [])
   LevelUserService.getOne(userId, function(data){
     $scope.user = data;
     ChallengeService.getUserChallenges(challengeIndex, function(data){
-      console.log(data)
+    console.log(data)
       $scope.userchallenges = data;
     });
   });

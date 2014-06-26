@@ -53,6 +53,12 @@ angular.module('level.controllers.activities', [])
         $scope.modal.hide();
         $scope.modalData = {};
       });
+      //add some more fields to the data and add to the feed
+      $scope.modalData.screenName = $scope.self.screenName;
+      $scope.modalData.userId = $scope.self.userId;
+      $scope.modalData.userImg = $scope.self.userImg;
+      $scope.modalData.postTime = new Date();
+      $scope.activities.unshift($scope.modalData);
     }
   };
 

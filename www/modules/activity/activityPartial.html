@@ -3,11 +3,16 @@
     <img src="{{activity.userImg}}" ng-click="goToProfile(activity.userId)">
     <div>
       <div ng-click="goToProfile(activity.userId)">
-        <div class="activity-user">First Last</div>
-        <div class="activity-screen-name">{{activity.screenName}}</div>
+        <div class="user-name">
+          First Last
+          <span class="screen-name">{{activity.screenName}}</span>
+        </div>
         <div class="right activity-post-time">{{convertTime(activity.postTime)}}</div>
       </div>
-      <p class="activity-text" ng-show="{{!!activity.challengeId}}">
+      <p class="activity-text" ng-show="{{!!activity.challengeId}}  && {{!!activity.text}}">
+        {{activity.text}} from the <span class="activity-challenge" ng-click="goToChallenge(activity.challengeId)">{{activity.challengeName}}</span> Challenge
+      </p>
+      <p class="activity-text" ng-show="{{!!activity.challengeId}} && {{!activity.text}}">
         Started the challenge <span class="activity-challenge" ng-click="goToChallenge(activity.challengeId)">{{activity.challengeName}}</span>
       </p>
       <p class="activity-text" ng-show="{{!activity.challengeId}}">{{activity.text}}</p>

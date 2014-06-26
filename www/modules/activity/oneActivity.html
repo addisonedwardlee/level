@@ -8,9 +8,11 @@
         <img src="{{activity.userImg}}" ng-click="goToProfile(activity.userId)">
         <div>
           <div ng-click="goToProfile(activity.userId)">
-            <div class="activity-user">First Last</div>
-            <div class="activity-screen-name">{{activity.screenName}}</div>
+            <div class="user-name">
+              First Last
+            </div>
             <div class="right activity-post-time">{{convertTime(activity.postTime)}}</div>
+            <div class="screen-name">{{activity.screenName}}</div>
           </div>
         </div>
       </div>
@@ -34,8 +36,10 @@
       <div class="item item-avatar" ng-repeat="comment in activity.comments">
         <img src="{{comment.userImg}}" ng-click="goToProfile(comment.userId)">
         <div>
-          <div class="activity-user">First Last</div>
-          <div class="activity-screen-name" ng-click="goToProfile(comment.userId)">{{comment.screenName}}</div>
+          <div class="user-name">
+            First Last
+            <span class="screen-name" ng-click="goToProfile(comment.userId)">{{comment.screenName}}</span>
+          </div>
           <div class="right activity-post-time">{{convertTime(comment.postTime)}}</div>
         </div>
         <p>{{comment.text}}</p>

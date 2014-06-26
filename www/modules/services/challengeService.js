@@ -48,7 +48,7 @@ angular.module('level.services.challenge', [])
   };
 
   //@params -> {userId: STRING, session: STRING}
-  this.completeTask = function(params, callback){
+  this.postChallengeTaskToFeed = function(params, callback){
     params.user = {
       type: 't',
       id: LevelUserService.self.authIdTwitter,
@@ -75,9 +75,20 @@ angular.module('level.services.challenge', [])
       });
   };
 
-  //@params -> {userId: STRING, session: STRING, challengeId: STRING, key: newValue}
-  this.update = function(params, callback){
+  //@params -> {challengeId: STRING, key: newValue}
+  this.updateChallengeTemplate = function(params, callback){
     $http.post(API_ENDPOINT + '/challenge/update/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
+      .success(function(data, status){
+        callback(data);
+      })
+      .error(function(data, status){
+        console.log('Error:' + data + '\n Status:' + status);
+      });
+  };
+
+  //@params -> {challengeId: STRING, key: newValue}
+  this.updateMyChallenge = function(params, callback){
+    $http.post(API_ENDPOINT + '/mychallenge/update/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)
       .success(function(data, status){
         callback(data);
       })

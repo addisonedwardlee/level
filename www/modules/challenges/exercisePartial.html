@@ -1,26 +1,15 @@
 <div>
-  <div ng-class="{'challenge-complete':exercise.complete, 'item item-button-right':true}">
-    <div class="row">
-      <div class="exercise-name">{{exercise.name}}</div>
-    </div>
-    <div class="ion-item-summary">
-      <div>Sets: {{exercise.sets}}</div>
+  <div class="item item-button-right">
+    <div class="exercise-name">{{exercise.name}}</div>
+    <div class="exercise-details">
+      <div>Sets: {{exercise.sets.length}}</div>
       <div>Reps: {{exercise.reps}}</div>
     </div>
-    <span class="badge badge-assertive challenge-badge">{{exercise.points}} points per set</span>
-    <div class="buttons challenge-buttons">
-      <!-- <button class="button button-energized ion-clipboard" ng-click="edit()">
-         <i type="checkbox"></i>
-      </button> -->
-      <button ng-class="{'button-outline': true, 'button button-balanced ion-checkmark':true}" ng-repeat="i in setsTemp track by $index" ng-click="complete()">
+    <span ng-class="{'badge-gray':!exercise.complete, 'badge-energized':exercise.complete, 'badge challenge-badge':true}"><i class="icon ion-trophy"> {{exercise.points}} per set</i></span>
+    <div class="buttons challenge-exercise-buttons">
+      <button ng-class="{'button-outline': !this.set.completed, 'button button-balanced ion-checkmark':true}" ng-repeat="set in exercise.sets" ng-click="complete()">
          <i type="checkbox"></i>
       </button>
     </div>
   </div>
-<!--   <div class="item item-divider item-button-right" ng-show="dropdown">
-    <div class="item item-input-inset">
-      <input type="text" placeholder="Enter details here">
-    </div>
-    <button class="button button-positive ion-camera" ng-click="takePicture()"></button>
-  </div> -->
 </div>

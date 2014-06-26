@@ -13,7 +13,7 @@ angular.module('level.controllers.charts', [])
       var parsedData = {};
       var parsedArray = [];
       for (var i = 0; i < dataPoints.length; i++){
-        var tag = dataPoints[i].data.tag;
+        var tag = dataPoints[i].data.tag.toLowerCase();
         if(parsedData[tag]){
           parsedData[tag].labels.push($scope.formatDate(dataPoints[i].created_at));
           parsedData[tag].values.push(dataPoints[i].data.value);

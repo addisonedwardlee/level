@@ -3,6 +3,7 @@ angular.module('level.controllers.home', [])
 .controller('HomeCtrl', ['$scope', '$location', 'LevelUserService',
   function($scope, $location, LevelUserService) {
 
+  // $scope.self = LevelUserService.self;
   var twitterData = {
     screenName: '@Addison_Lee_',
     authIdTwitter: '2553293678',

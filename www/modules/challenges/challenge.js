@@ -54,12 +54,23 @@ angular.module('level.controllers.challenges', [])
 
   $scope.submitModal = function(){
     if($scope.formValidation()){
+      //create a holder for the user's myChallenge unique ID
+      $scope.modalData.myChallengeId = null;
       $scope.modalData.totalPoints = 0;
-
       for(var i = 0; i < $scope.modalData.tasks.length; i++){
+        //add up all the points per set/rep
         $scope.modalData.totalPoints += parseInt($scope.modalData.tasks[i].points) * $scope.modalData.tasks[i].sets;
+        //create a unique object for each set
+        var setsTemp = $scope.modalData.tasks[i].sets;
+        $scope.modalData.tasks[i].sets = [];
+        for(var j = 0; j < setsTemp; j++){        
+          $scope.modalData.tasks[i].sets.push({
+            reps: $scope.modalData.tasks[i].reps,
+            completed: false
+          });
+        }
       }
-      
+
       ChallengeService.create($scope.modalData, function(data){
         $ionicPopup.show({
           title: 'Challenge Created Succesfully!',
@@ -71,7 +82,10 @@ angular.module('level.controllers.challenges', [])
               type: 'button-positive',
               onTap: function() {
                 //go to the challenge
-                $state.go('app.oneChallenge', {challengeId: data.challengeId});
+                $state.go('app.oneChallenge', {
+                  challengeId: data.challengeId,
+                  challengeTemplate: true
+                });
               }
             },
           ]
@@ -136,28 +150,30 @@ angular.module('level.controllers.challenges', [])
   } else {
   //otherwise, this is a myChallenge for a specific user
     ChallengeService.getUserChallenges({
-      challengeId: id
+      myChallengeId: id
     }, function(data){
       console.log('one user myChallenge',data);
       $scope.started = true;
-      $scope.challenge = data;
+      $scope.challenge = data[0];
     });
   }
 
   $scope.startChallenge = function(){
     if(!$scope.started){
-      ChallengeService.takeChallenge($scope.challenge, function(){});
+      ChallengeService.takeChallenge($scope.challenge, function(data){
+        $scope.challenge.myChallengeId = data.myChallengeId;
+        console.log('started', $scope.challenge)
+      });
       $scope.started = true;
       //ensure the points for this user are set to 0 at challenge start
-      $scope.userPoints = 0;
+      $scope.challenge.userPoints = 0;
+      $scope.challenge.progressBar = 0;
       //used to reset any exercises completed before challenge start
       $scope.$broadcast('challengeStarted');
-
+      //create a new post to the activity feed
       $scope.newPostData = {
         challengeId: $scope.challenge.challengeId,
         challengeName: $scope.challenge.name,
-        numLikes: 0,
-        numComments: 0,
         likes: [],
         comments: []
       };
@@ -167,9 +183,21 @@ angular.module('level.controllers.challenges', [])
   };
 
   $scope.$on('completeExercise', function(event, points){
-    $scope.userPoints += points;
+    $scope.challenge.userPoints += points;
+    $scope.challenge.progressBar = ($scope.challenge.userPoints / $scope.challenge.totalPoints) * 100 + '%';
 
-    if($scope.userPoints === $scope.challenge.totalPoints) {
+    //track the user's progress
+    ChallengeService.updateMyChallenge($scope.challenge, function(data){
+        console.log('points',data)
+      });
+
+    if($scope.challenge.userPoints === $scope.challenge.totalPoints) {
+      //complete the challenge locally and update the DB
+      $scope.challenge.completed = true;
+      ChallengeService.updateMyChallenge($scope.challenge, function(data){
+        console.log('completed',data);
+      });
+      //show alert to tell user challenge now complete
       var popup = $ionicPopup.show({
         scope: $scope,
         title: 'Challenge Complete!',
@@ -206,69 +234,71 @@ angular.module('level.controllers.challenges', [])
 
 }])
 
-.directive('exercise', ['ChallengeService', 'LevelUserService',
-  function(ChallengeService, LevelUserService){
+.directive('exercise', ['ChallengeService', 'LevelUserService', 'ActivityService',
+  function(ChallengeService, LevelUserService, ActivityService){
     return {
       restrict: 'E',
       replace: true,
       scope: {
-        exercise: '='
+        exercise: '=',
+        challenge: '='
       },
       templateUrl: 'modules/challenges/exercisePartial.html',
-      link: function(scope, iElement, iAttrs){
+      link: function(scope, element, attrs){
         //used to reset any exercises completed before challenge start
         scope.exercise.complete = scope.exercise.complete || false;
-
-        scope.setsTempF = function(num){
-          return new Array(num);
-        };
-        scope.setsTemp = scope.setsTempF(scope.exercise.sets);
+        var challengeStarted = false;
 
         scope.$on('challengeStarted', function(){
-          if(scope.exercise.complete){
-            scope.exercise.complete = false;
-          }
+          challengeStarted = true;
+          scope.exercise.complete = false;
+          scope.exercise.sets.forEach(function(set){
+            set.completed = false;
+          });
         });
 
+        //track sets completed so far to determine if exercise is complete
+        var setsSoFar = 0;
         scope.complete = function(){
-          if(!scope.exercise.complete){
-            //used to track progress at challenge level
-            scope.$emit('completeExercise', scope.exercise.points);
-            var task = {
-              data: {
-                tag: scope.exercise.name,
-                value: scope.exercise.reps
+          if(!this.set.completed){
+            this.set.completed = true;
+            if(challengeStarted){
+              //used to track progress at challenge level
+              scope.$emit('completeExercise', scope.exercise.points);
+              //create a new post
+              ActivityService.create({
+                likes: [],
+                comments: [],
+                text: '#' + scope.exercise.name + ' ' + this.set.reps,
+                challengeId: scope.challenge.challengeId,
+                challengeName: scope.challenge.name
+              }, function(){});
+              //update the user's charts
+              ChallengeService.postChallengeTaskToFeed({
+                data: {
+                  tag: scope.exercise.name,
+                  value: scope.exercise.reps
+                }
+              }, function(){});
+              //update the user's total points
+              LevelUserService.update({points: parseInt(scope.exercise.reps)}, function(){});
+              //update CSS if this is the last set
+              setsSoFar++;
+              if(setsSoFar === scope.exercise.sets.length){
+                scope.exercise.complete = true;
               }
-            };
-            //used to update charts
-            ChallengeService.completeTask(task, function(){});
-            //used to update total user points
-            LevelUserService.update({points: parseInt(scope.exercise.reps)}, function(){});
-            //update CSS if this is the last set
-            if(this.$last){
-              scope.exercise.complete = true;
             }
           }
-          if(scope.dropdown){
-            scope.dropdown = !scope.dropdown;
-          }
         };
 
-        scope.dropdown = false;
-        scope.edit = function(){
-          scope.dropdown = !scope.dropdown;
-        };
-
-        scope.takePicture = function() {
-          navigator.camera.getPicture(function(imageURI) {
-            console.log('success!');
-            }, function(err) {
-            console.log('err!', err);
-            }, { quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI });
-        };
-
-
+        // scope.takePicture = function() {
+        //   navigator.camera.getPicture(function(imageURI) {
+        //     console.log('success!');
+        //     }, function(err) {
+        //     console.log('err!', err);
+        //     }, { quality: 50,
+        //     destinationType: Camera.DestinationType.FILE_URI });
+        // };
       }
     };
 }]);
