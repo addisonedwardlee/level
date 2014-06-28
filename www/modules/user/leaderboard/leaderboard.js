@@ -1,4 +1,8 @@
-angular.module('level.services.leaderboard', [])
+angular.module('user.leaderboard', [])
+
+.controller('LeaderboardCtrl', ['$scope', 'LeaderboardService', function($scope, LeaderboardService) {
+  $scope.leaderboard = LeaderboardService.getAll();
+}])
 
 .service('LeaderboardService', function(){
 

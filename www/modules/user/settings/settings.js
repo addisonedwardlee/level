@@ -1,4 +1,4 @@
-angular.module('level.controllers.settings', [])
+angular.module('user.settings', [])
 
 .controller('SettingsCtrl', ['$scope', '$state', 'FacebookLoginService', 'TwitterLoginService',
   function($scope, $state, FacebookLoginService, TwitterLoginService) {

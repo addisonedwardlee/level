@@ -19,30 +19,40 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
-    <!-- app level scripts -->
-    <script src="app.js"></script>
+    <!-- lib -->
     <script src="lib/momentjs/min/moment.min.js"></script>
     <script src="lib/jsOauth/jsOauth-1.3.6.js"></script>
     <script src="lib/chartjs/Chart.min.js"></script>
 
-    <!-- controllers -->
-    <script src="modules/challenges/challenge.js"></script>
-    <script src="modules/activity/activity.js"></script>
+    <!-- app level components -->
+    <script src="app.js"></script>
     <script src="modules/home/home.js"></script>
-    <script src="modules/leaderboard/leaderboard.js"></script>
-    <script src="modules/profile/profile.js"></script>
-    <script src="modules/profile/charts.js"></script>
-    <script src="modules/settings/settings.js"></script>
-    <script src="modules/login/login.js"></script>
-
-    <!-- services -->
-    <script src="modules/services/challengeService.js"></script>
-    <script src="modules/services/activityService.js"></script>
-    <script src="modules/services/levelUserService.js"></script>
-    <script src="modules/services/leaderboardService.js"></script>
     <script src="modules/services/timeConversionService.js"></script>
-    <script src="modules/services/fbLoginService.js"></script>
-    <script src="modules/services/twitterLoginService.js"></script>
+
+    <!-- user module -->
+    <script src="modules/user/user.js"></script>
+    <script src="modules/user/loginPage/loginPage.js"></script>
+    <script src="modules/user/levelLogin/levelLogin.js"></script>
+    <script src="modules/user/newAccount/newAccount.js"></script>
+    <script src="modules/user/settings/settings.js"></script>
+    <script src="modules/user/leaderboard/leaderboard.js"></script>
+    <script src="modules/user/profile/profile.js"></script>
+    <script src="modules/user/profile/charts/charts.js"></script>
+    <script src="modules/user/services/levelUserService.js"></script>
+    <script src="modules/user/services/fbLoginService.js"></script>
+    <script src="modules/user/services/twitterLoginService.js"></script>
+
+    <!-- activity module -->
+    <script src="modules/activity/activity.js"></script>
+    <script src="modules/activity/allActivities/allActivities.js"></script>
+    <script src="modules/activity/oneActivity/oneActivity.js"></script>
+    <script src="modules/activity/activityService.js"></script>
+
+    <!-- challenge module -->
+    <script src="modules/challenges/challenge.js"></script>
+    <script src="modules/challenges/allChallenges/allChallenges.js"></script>
+    <script src="modules/challenges/oneChallenge/oneChallenge.js"></script>
+    <script src="modules/challenges/challengeService.js"></script>
 
   </head>
 

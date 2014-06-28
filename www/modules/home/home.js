@@ -1,9 +1,9 @@
-angular.module('level.controllers.home', [])
+angular.module('level.home', [])
 
 .controller('HomeCtrl', ['$scope', '$location', 'LevelUserService',
   function($scope, $location, LevelUserService) {
 
-  // $scope.self = LevelUserService.self;
+  $scope.self = LevelUserService.self;
   var twitterData = {
     screenName: '@Addison_Lee_',
     authIdTwitter: '2553293678',
@@ -16,6 +16,8 @@ angular.module('level.controllers.home', [])
     console.log('_self', JSON.stringify(LevelUserService.self));
     $scope.self = LevelUserService.self;
   });
+
+  
 
   //watch used to update active tab  
   $scope.$on('$locationChangeStart', function(){

@@ -1,20 +1,10 @@
 angular.module('level', [
   'ionic',
-  'level.controllers.activities',
-  'level.controllers.challenges',
-  'level.controllers.home',
-  'level.controllers.leaderboard',
-  'level.controllers.settings',
-  'level.controllers.profile',
-  'level.controllers.charts',
-  'level.controllers.login',
-  'level.services.challenge',
-  'level.services.activity',
-  'level.services.levelusers',
-  'level.services.leaderboard',
-  'level.services.fblogin',
-  'level.services.twitterlogin',
-  'level.services.timeconversion'
+  'level.home',
+  'user',
+  'activities',
+  'challenges',
+  'level.services.timeConversion'
   ])
 
 .constant('API_ENDPOINT', 'http://api.level.my/json')
@@ -50,98 +40,11 @@ angular.module('level', [
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-    .state('login', {
-      url: "/login",
-        templateUrl: "modules/login/loginHome.html",
-        controller: 'LoginCtrl'
-    })
-    .state('newAccount', {
-      url: "/newAccount",
-        templateUrl: "modules/login/newAccount.html",
-        controller: 'NewAccountCtrl'
-    })
-    .state('levelLogin', {
-      url: "/levelLogin",
-        templateUrl: "modules/login/levelLogin.html",
-        controller: 'LevelLoginCtrl'
-    })
     .state('app', {
       url: "/app",
       abstract: true,
       templateUrl: "modules/home/home.html",
       controller: 'HomeCtrl'
-    })
-    .state('app.activity', {
-      url: "/activity",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/activity/activities.html",
-          controller: 'ActivityCtrl'
-        }
-      }
-    })
-    .state('app.activityComments', {
-      url: "/activity/:activityData",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/activity/oneActivity.html",
-          controller: 'CommentCtrl'
-        }
-      }
-    })
-    .state('app.challenges', {
-      url: "/challenges",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/challenges/allChallenges.html",
-          controller: 'ChallengesCtrl'
-        }
-      }
-    })
-    .state('app.oneChallenge', {
-      url: "/challenges/:challengeId/:challengeTemplate",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/challenges/oneChallenge.html",
-          controller: 'ChallengeCtrl'
-        }
-      }
-    })
-    .state('app.profile', {
-      url: "/profile/:profileId",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/profile/profile.html",
-          controller: 'ProfileCtrl'
-        }
-      }
-    })
-    .state('app.charts', {
-      url: "/profile/:profileId/charts",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/profile/charts.html",
-          controller: 'ChartsCtrl'
-        }
-      }
-    })
-    .state('app.leaderboard', {
-      url: "/leaderboard",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/leaderboard/leaderboard.html",
-          controller: 'LeaderboardCtrl'
-        }
-      }
-    })
-    .state('app.settings', {
-      url: "/settings",
-      views: {
-        'menuContent' :{
-          templateUrl: "modules/settings/settings.html",
-          controller: 'SettingsCtrl'
-        }
-      }
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');

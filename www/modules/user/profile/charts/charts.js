@@ -1,8 +1,11 @@
-angular.module('level.controllers.charts', [])
+angular.module('user.charts', [])
 
-.controller('ChartsCtrl', ['$scope', 'LevelUserService',
-  function($scope, LevelUserService) {
-    LevelUserService.getCharts(function(dataPoints){
+.controller('ChartsCtrl', ['$scope', '$stateParams', 'LevelUserService',
+  function($scope, $stateParams, LevelUserService) {
+
+    LevelUserService.getCharts({
+      screenName: $stateParams.screenName
+    }, function(dataPoints){
       console.log(dataPoints);
       $scope.createChartData(dataPoints, function(parsedArray){
         $scope.charts = parsedArray;

@@ -1,0 +1,14 @@
+<div>
+  <div class="item item-button-right one-exercise">
+    <div class="exercise-name">{{exercise.name}}</div>
+    <div class="exercise-details">
+      <div>Reps: {{exercise.reps}}</div>
+    </div>
+    <span ng-class="{'badge-gray':!exercise.completed, 'badge-energized':exercise.completed, 'badge challenge-exercise-badge':true}"><i class="icon ion-trophy"> {{exercise.points}}</i></span>
+    <div class="buttons challenge-exercise-buttons">
+      <button ng-class="{'button-outline': !exercise.completed, 'button button-balanced ion-checkmark':true}" ng-click="complete()">
+         <i type="checkbox"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,10 @@
-angular.module('level.services.levelusers', [])
+angular.module('user.levelusers', [])
 
 .service('LevelUserService', ['$http', 'API_ENDPOINT', 
   function($http, API_ENDPOINT){
 
   this.self = {};
+  this.otherUser = {};
 
   //@params -> {userId: STRING, session: STRING}
   this.verifySession = function(params, callback) {
@@ -90,8 +91,8 @@ angular.module('level.services.levelusers', [])
   };
 
   //@id -> userId or _id
-  this.getCharts = function(callback){
-    $http.get('http://stats.level.my/json/series/' + this.self.screenName)
+  this.getCharts = function(params, callback){
+    $http.get('http://stats.level.my/json/series/' + params.screenName)
       .success(function(data, status){
         callback(data);
       })

@@ -1,4 +1,4 @@
-angular.module('level.services.twitterlogin', [])
+angular.module('user.twitterlogin', [])
 
 .factory('TwitterLoginService', function ($rootScope, $q, $window, $http, myAppConfig) {
 

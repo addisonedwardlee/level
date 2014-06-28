@@ -1,4 +1,4 @@
-angular.module('level.controllers.profile', [])
+angular.module('user.profile', [])
 
 .controller('ProfileCtrl', ['$scope', '$stateParams', '$state', 'LevelUserService', 'ChallengeService', 'TimeConversionService',
   function($scope, $stateParams, $state, LevelUserService, ChallengeService, TimeConversionService) {
@@ -10,6 +10,7 @@ angular.module('level.controllers.profile', [])
     userId: userId
   };
   LevelUserService.getOne(userId, function(data){
+    console.log('user', data)
     $scope.user = data;
     ChallengeService.getUserChallenges(challengeIndex, function(data){
     console.log(data)
@@ -27,7 +28,7 @@ angular.module('level.controllers.profile', [])
   };
 
   $scope.goToCharts = function(){
-    $state.go('app.charts', {profileId: userId});
+    $state.go('app.charts', {profileId: userId, screenName: $scope.user.screenName});
   };
 
   $scope.goToMyChallenge = function(id){

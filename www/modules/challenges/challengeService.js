@@ -1,4 +1,4 @@
-angular.module('level.services.challenge', [])
+angular.module('challenges.challengeService', [])
 
 .service('ChallengeService', ['$http', 'LevelUserService', 'API_ENDPOINT',
   function($http, LevelUserService, API_ENDPOINT){

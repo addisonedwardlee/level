@@ -1,4 +1,4 @@
-angular.module('level.services.timeconversion', [])
+angular.module('level.services.timeConversion', [])
 
 .factory('TimeConversionService',
   function(){

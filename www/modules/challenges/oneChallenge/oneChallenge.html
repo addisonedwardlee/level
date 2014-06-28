@@ -22,8 +22,8 @@
           <span class="screen-name">{{challenge.screenName}}</span>
           </div>
         </div>
-        <div ng-if="!started" class="challenge-description-detailed">{{challenge.description}}</div>
-        <div ng-if="started" class="progress-bar-container">
+        <div ng-if="!challenge.started" class="challenge-description-detailed">{{challenge.description}}</div>
+        <div ng-if="challenge.started" class="progress-bar-container">
           <div class="progress-bar">
             <div class="progress-bar-start"></div>
             <div class="progress-bar-middle"><span style="width: {{challenge.progressBar}}" class="progress-bar-progress"></span></div>
@@ -33,7 +33,7 @@
           <p><b>{{challenge.userPoints}} of {{challenge.totalPoints}} pts earned</b></p>
         </div>
       </div>
-      <div class="item item-divider item-narrow" ng-if="!started">
+      <div class="item item-divider item-narrow" ng-if="!challenge.started">
         <button class="button button-clear button-full" ng-click="startChallenge()">
           <b>START THE CHALLENGE</b>
         </button>

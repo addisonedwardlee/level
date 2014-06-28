@@ -1,4 +1,4 @@
-angular.module('level.services.activity', [])
+angular.module('activities.activityService', [])
 
 .service('ActivityService', ['$http', 'LevelUserService', 'API_ENDPOINT', 
   function($http, LevelUserService, API_ENDPOINT){
