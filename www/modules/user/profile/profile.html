@@ -42,7 +42,7 @@
       </div>
       <div class="item" ng-repeat="challenge in userchallenges" ng-init="challenge.postTime = convertTime(challenge.postTime)">
         <p class="activity-text">
-          Completed the challenge 
+          Started the challenge 
           <a ng-click="goToMyChallenge(challenge.myChallengeId)" class="activity-challenge">{{challenge.name}}</a>
           for <b>{{challenge.userPoints}}</b> points {{challenge.postTime}} ago
         </p>

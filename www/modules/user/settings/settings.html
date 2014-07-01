@@ -1,5 +1,7 @@
 <ion-view title="Settings">
-  <ion-nav-bar class="nav-title-slide-ios7"></ion-nav-bar>
+  <ion-nav-bar class="nav-title-slide-ios7">
+    <ion-nav-back-button class="button-icon ion-chevron-left"></ion-nav-back-button>
+  </ion-nav-bar>
   <ion-content class="has-footer">
     <div class="list">
       <ion-toggle ng-repeat="item in settings" ng-model="item.checked" ng-checked="item.checked">

@@ -1,0 +1,27 @@
+<ion-view>
+  <ion-header-bar>
+    <h1 class="title">Pick a screen name</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div class="card">
+      <div>
+        Welcome, {{self.name}}.  We've got most of your details, but we also want a screen name for your Level account.  Enter one below.
+      </div>
+      </br>
+      <form name="form.validation">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Screen Name</span>
+          <input type="text" name="screenName" placeholder="GetOnMyLevel" ng-model="userData.screenName" required>
+        </label>
+      </form>
+    </div>
+    <div>
+      <button class="button button-block button-positive" ng-click="createAccount()">
+        Create Account
+      </button>
+      <button class="button button-block button-assertive" ng-click="cancel()">
+        Cancel
+      </button>
+    </div>
+  </ion-content>
+</ion-view>

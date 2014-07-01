@@ -1,7 +1,7 @@
 angular.module('activities.allActivities', [])
 
-.controller('ActivityCtrl', ['$scope', '$ionicModal', '$ionicPopup', 'ActivityService', 'LevelUserService',
-  function($scope, $ionicModal, $ionicPopup, ActivityService, LevelUserService) {
+.controller('ActivityCtrl', ['$scope', '$ionicModal', '$ionicPopup', 'ActivityService', 'LevelUserService', 'ChallengeService',
+  function($scope, $ionicModal, $ionicPopup, ActivityService, LevelUserService, ChallengeService) {
   
   $scope.self = LevelUserService.self;
 
@@ -46,13 +46,27 @@ angular.module('activities.allActivities', [])
       $scope.modalData.likes = [];
       $scope.modalData.comments = [];
       $scope.modalData.picture = null;
+      //Create the post in the DB
       ActivityService.create($scope.modalData, function(data){
         $ionicPopup.alert({
           title: 'Post Created Succesfully!'        
         });
         $scope.modal.hide();
-        $scope.modalData = {};
       });
+      //Send the data to the Chart DB
+      if($scope.modalData.text.indexOf('#') > -1){      
+        var posts = $scope.modalData.text.split('#');
+        //ignore the first item in the array, since it's an empty string
+        for(var i = 1; i < posts.length; i++){ 
+          var val = posts[i].split(' ');
+          ChallengeService.postChallengeTaskToFeed({
+            data : {
+              tag: val[0],
+              value: val[1]
+            }
+          }, function(){});
+        }
+      }
       //add some more fields to the data and add to the feed
       $scope.modalData.screenName = $scope.self.screenName;
       $scope.modalData.userId = $scope.self.userId;
@@ -120,7 +134,7 @@ angular.module('activities.allActivities', [])
       };
  
       scope.addComment = function(){
-        ActivityService.currentService = scope.activity;
+        ActivityService.currentActivity = scope.activity;
         $state.go('app.activityComments');
       };
 

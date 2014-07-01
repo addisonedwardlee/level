@@ -15,7 +15,7 @@
         <span class="badge challenge-badge-detailed">
           <i class="icon ion-trophy"> {{challenge.totalPoints}}</i>
         </span>
-        <div class="user-container">
+        <div class="user-container" ng-click="goToProfile(challenge.userId)">
           <img class="user-image-small" src="{{challenge.userImg}}">
           <div class="user-name">
           First Last
@@ -23,6 +23,10 @@
           </div>
         </div>
         <div ng-if="!challenge.started" class="challenge-description-detailed">{{challenge.description}}</div>
+        <div ng-if="challenge.started" class="">
+          <div>Started on: {{challenge.startDate}}</div>
+          <div>Time to complete: {{challenge.finishTime}}</div>
+        </div>
         <div ng-if="challenge.started" class="progress-bar-container">
           <div class="progress-bar">
             <div class="progress-bar-start"></div>

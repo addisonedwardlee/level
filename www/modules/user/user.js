@@ -7,6 +7,7 @@ angular.module('user', [
   'user.profile',
   'user.charts',
   'user.fblogin',
+  'user.createScreenName',
   'user.twitterlogin',
   'user.levelusers'
   ])
@@ -23,6 +24,11 @@ angular.module('user', [
       url: "/newAccount",
         templateUrl: "modules/user/newAccount/newAccount.html",
         controller: 'NewAccountCtrl'
+    })
+    .state('createScreenName', {
+      url: "/createScreenName",
+        templateUrl: "modules/user/facebookUsers/createScreenName.html",
+        controller: 'CreateScreenNameCtrl'
     })
     .state('levelLogin', {
       url: "/levelLogin",

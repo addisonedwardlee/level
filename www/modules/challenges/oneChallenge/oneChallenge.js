@@ -29,13 +29,21 @@ angular.module('challenges.oneChallenge', [])
     });
   }
 
-  $scope.startChallenge = function(){
+  $scope.goToProfile = function(profileId){
+    $state.go('app.profile', {profileId: profileId});
+  };
+
+  $scope.startChallenge = function() {
     if(!$scope.challenge.started){
       ChallengeService.takeChallenge($scope.challenge, function(data){
         $scope.challenge.myChallengeId = data.myChallengeId;
-        console.log('started', $scope.challenge)
       });
       $scope.challenge.started = true;
+      $scope.challenge.startDate = new Date().toDateString();
+      $scope.challenge.startTime = Date.now();
+      console.log($scope.challenge.startTime);
+
+      $scope.challenge.finishTime = 'in progress';
       //ensure the points for this user are set to 0 at challenge start
       $scope.challenge.userPoints = 0;
       $scope.challenge.progressBar = 0;
@@ -63,6 +71,9 @@ angular.module('challenges.oneChallenge', [])
     if($scope.challenge.userPoints === $scope.challenge.totalPoints) {
       //complete the challenge locally and update the DB
       $scope.challenge.completed = true;
+      //calculate completion time
+      console.log($scope.challenge.startTime, Date.now());
+      $scope.challenge.finishTime = new Date(Date.now() - $scope.challenge.startTime).getMinutes() + ' minutes';
       ChallengeService.updateMyChallenge($scope.challenge, function(data){
         console.log('completed',data);
       });

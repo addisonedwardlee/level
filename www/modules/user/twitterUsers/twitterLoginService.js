@@ -1,14 +1,14 @@
 angular.module('user.twitterlogin', [])
 
-.factory('TwitterLoginService', function ($rootScope, $q, $window, $http, myAppConfig) {
+.factory('TwitterLoginService', function ($rootScope, $q, $window, $http, TwitterInfo) {
 
   var loginWindow;
-  var callbackURL = myAppConfig.oauthSettings.callbackUrl;
+  var callbackURL = TwitterInfo.oauthSettings.callbackUrl;
   var oauth;
   var options;
   var twitterKey;
 
-  options = angular.extend({}, myAppConfig.oauthSettings);
+  options = angular.extend({}, TwitterInfo.oauthSettings);
   options = angular.extend(options, {
       callbackUrl: callbackURL
   });

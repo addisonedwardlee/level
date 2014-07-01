@@ -5,7 +5,7 @@ angular.module('activities.activityService', [])
 
   //this is used when navigating from one view to another
   // to avoid doing unneccesary API calls
-  this.currentService = {};
+  this.currentActivity = {};
 
   this.getAll = function(params, callback){
     $http.post(API_ENDPOINT + '/activities/get/' + LevelUserService.self.userId + '/' + LevelUserService.self.session, params)

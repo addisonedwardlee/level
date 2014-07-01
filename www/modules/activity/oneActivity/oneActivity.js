@@ -4,7 +4,7 @@ angular.module('activities.oneActivity', [])
   function($scope, $state, ActivityService, LevelUserService, TimeConversionService) {
   
   $scope.self = LevelUserService.self;
-  $scope.activity = ActivityService.currentService;
+  $scope.activity = ActivityService.currentActivity;
 
   $scope.goToChallenge = function(challengeId){
     $state.go('app.oneChallenge', {challengeId: challengeId, challengeTemplate: true});

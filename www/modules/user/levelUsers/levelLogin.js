@@ -16,8 +16,9 @@ angular.module('user.levelLogin', [])
         $scope.userData.email = $scope.userData.screenNameOrEmail;
       }
       LevelUserService.signIn($scope.userData, function(data){
-        console.log(data);
         LevelUserService.self = data;
+        $window.localStorage.setItem('self', JSON.stringify(data));
+        console.log('_self', JSON.stringify(LevelUserService.self));
         $state.go('app.activity');
       });
     }

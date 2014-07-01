@@ -1,7 +1,7 @@
 angular.module('user.settings', [])
 
-.controller('SettingsCtrl', ['$scope', '$state', 'FacebookLoginService', 'TwitterLoginService',
-  function($scope, $state, FacebookLoginService, TwitterLoginService) {
+.controller('SettingsCtrl', ['$scope', '$state', '$window', 'FacebookLoginService', 'TwitterLoginService',
+  function($scope, $state, $window, FacebookLoginService, TwitterLoginService) {
   $scope.settings = [{
       text: 'Email',
       checked: true
@@ -21,8 +21,7 @@ angular.module('user.settings', [])
 
   $scope.logout = function(){
     console.log('logout');
-    FacebookLoginService.logout();
-    TwitterLoginService.logout();
+    $window.localStorage.setItem('self', {});
     $state.go('login');
   };
 
